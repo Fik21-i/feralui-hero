@@ -1,0 +1,241 @@
+.hero {
+  --cord-right: 7rem;
+  --pad-x: clamp(1.25rem, 5vw, 5rem);
+
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 6rem var(--pad-x) 5rem;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--ink);
+  transition:
+    background-color 0.6s ease,
+    color 0.6s ease;
+}
+
+/* PullCord reads these custom properties for placement + rope colour. */
+:root {
+  --pullcord-right: 7rem;
+  --pullcord-z: 3;
+  --pullcord-ink: var(--rope);
+}
+
+/* ── Light cone falling from the cord anchor ─────────────────────────── */
+.hero__light {
+  position: absolute;
+  z-index: -2;
+  top: 0;
+  right: calc(var(--cord-right) + 32px - 60vmax);
+  width: 120vmax;
+  height: 100%;
+  background:
+    conic-gradient(
+      from 156deg at 50% 0%,
+      transparent 0deg,
+      var(--cone) 0deg 48deg,
+      transparent 48deg
+    );
+  filter: blur(36px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 92%);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 92%);
+  opacity: var(--cone-opacity);
+  transition: opacity 0.6s ease;
+}
+
+/* soft pool of light behind the headline */
+.hero::before {
+  content: '';
+  position: absolute;
+  z-index: -3;
+  inset: 0;
+  background:
+    radial-gradient(60rem 36rem at 12% 105%, var(--pool), transparent 70%),
+    radial-gradient(40rem 30rem at calc(100% - var(--cord-right)) -6%, var(--halo), transparent 70%);
+}
+
+.hero__grain {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  opacity: var(--grain);
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ── Content ─────────────────────────────────────────────────────────── */
+.hero__inner {
+  position: relative;
+  width: 100%;
+  max-width: 62rem;
+  margin-inline: auto;
+}
+
+.hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0 0 1.75rem;
+  padding: 0.4rem 0.9rem 0.4rem 0.75rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  background: var(--chip);
+  backdrop-filter: blur(6px);
+}
+
+.hero__dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--accent-ring);
+}
+
+.hero__title {
+  margin: 0;
+  max-width: 14ch;
+  font-family: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  font-weight: 560;
+  font-size: clamp(2.75rem, 1.2rem + 7vw, 6.5rem);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+.hero__title em {
+  font-style: italic;
+  font-weight: 460;
+  color: var(--accent);
+}
+
+.hero__lede {
+  margin: 1.75rem 0 0;
+  max-width: 34rem;
+  font-size: clamp(1.0625rem, 0.95rem + 0.5vw, 1.3125rem);
+  line-height: 1.6;
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+  margin-top: 2.5rem;
+}
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.button--primary {
+  background: var(--btn-bg);
+  color: var(--btn-ink);
+  box-shadow: 0 10px 30px -10px var(--accent);
+}
+
+.button--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 36px -12px var(--accent);
+}
+
+.button--ghost {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.button--ghost:hover {
+  border-color: var(--ink);
+  background: var(--chip);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.hero__hint {
+  margin: 2.25rem 0 0;
+  font-size: 0.9375rem;
+  color: var(--ink-soft);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .hero__inner {
+    padding-right: calc(var(--cord-right) + 3rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    --cord-right: 1.25rem;
+    align-items: flex-start;
+    /* clear the hanging cord + knob so text is never covered */
+    padding-top: 14.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  :root {
+    --pullcord-right: 1.25rem;
+  }
+
+  .hero__inner {
+    padding-right: 0;
+  }
+
+  .hero__actions .button {
+    flex: 1 1 100%;
+  }
+}
+
+/* ── Reduced motion ──────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .hero,
+  .hero__light,
+  .button {
+    transition: none;
+  }
+
+  .button--primary:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "name": "feralui-hero",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "typecheck": "tsc -b",
+    "lint": "oxlint",
+    "check": "npm run lint && npm run typecheck",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "preview:pages": "wrangler pages dev dist",
+    "preview:workers": "wrangler dev",
+    "build:pages": "npm run build",
+    "build:workers": "npm run build",
+    "deploy:pages": "npm run build:pages && wrangler pages deploy dist --project-name=feralui-hero",
+    "deploy:workers": "npm run build:workers && wrangler deploy",
+    "verify:workers": "npm run build:workers && wrangler deploy --dry-run --outdir .wrangler/dry-run"
+  },
+  "dependencies": {
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "pullcord": "^0.1.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "oxlint": "^1.88.0",
+    "typescript": "~6.0.3",
+    "vite": "^8.3.4",
+    "wrangler": "^4.152.0"
+  },
+  "description": "A single-section React hero built on the FeralUI PullCord component.",
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
